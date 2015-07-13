@@ -1,3 +1,13 @@
+;; account for windows
+(if (equal system-type 'windows-nt)
+    (progn (setq explicit-shell-file-name
+                 "C:/Program Files (x86)/Git/bin/bash.exe")
+           (setq explicit-sh.exe-args '("--login" "-i"))
+           (setq shell-file-name explicit-shell-file-name)
+           (setenv "SHELL" shell-file-name)
+           (add-to-list 'exec-path "c:/Program Files (x86)/Git/bin")
+           (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)))
+
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/") t)
