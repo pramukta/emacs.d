@@ -20,3 +20,8 @@ session*
 .cask
 tramp
 /var/pcache
+.graphene-geometry
+.python-environments*
+ido.last
+projectile.cache
+smex-items
