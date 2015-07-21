@@ -4,7 +4,7 @@
 
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/projectile
-;; Package-Version: 20150720.515
+;; Package-Version: 20150721.547
 ;; Keywords: project, convenience
 ;; Version: 0.13.0-cvs
 ;; Package-Requires: ((dash "2.11.0") (pkg-info "0.4"))
@@ -2261,9 +2261,10 @@ This command will first prompt for the directory the file is in."
   :type 'hook)
 
 (defun projectile-keep-project-p (project)
-  "Determine wether we should cleanup this project or not.
+  "Determine whether we should cleanup (remove) PROJECT or not.
 
-It handles the case of remote files as well. See `projectile-cleanup-known-projects'."
+It handles the case of remote projects as well.
+See `projectile-cleanup-known-projects'."
   ;; Taken from from `recentf-keep-default-predicate'
   (cond
    ((file-remote-p project nil t) (file-readable-p project))
