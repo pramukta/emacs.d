@@ -23,12 +23,17 @@
 (require 'project-persist)
 (project-persist-mode 0)
 
-;; NOTE: Disabling because updates to helm integrate popwin-like functionality but also conflict with it.
 ;; put helm buffers in popwin
-;; (require 'popwin)
+(require 'popwin)
 ;; (setq display-buffer-function 'popwin:display-buffer)
-;; (push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
-;; (push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
+(push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
+(add-hook 'helm-after-initialize-hook (lambda ()
+                                          (popwin:display-buffer helm-buffer t)
+                                          (popwin-mode -1)))
+
+ ;;  Restore popwin-mode after a Helm session finishes.
+ (add-hook 'helm-cleanup-hook (lambda () (popwin-mode 1)))
+
 
 ;; configure helm keybindings
 (require 'helm)
@@ -49,7 +54,7 @@
 
 ;; configure helm-projectile
 (require 'helm-projectile)
-(helm-projectile-off)
+(helm-projectile-on)
 
 ;; hc-zenburn theme
 (load-theme 'hc-zenburn t)
