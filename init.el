@@ -66,8 +66,6 @@
   (cdr (assoc (symbol-name colorname) hc-zenburn-colors-alist))
   )
 
-(print hc-zenburn-colors-alist)
-
 ;; visual customizations
 (set-face-attribute 'mode-line nil :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
 (set-face-attribute 'mode-line-inactive nil
