@@ -123,3 +123,8 @@
    (quote
     ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
  )
+
+
+;; SLIME configuration
+(setq inferior-lisp-program "/opt/local/bin/sbcl")
+(setq slime-contribs '(slime-fancy))
