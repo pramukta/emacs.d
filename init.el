@@ -136,7 +136,9 @@
 
 
 ;; SLIME configuration
-(setq inferior-lisp-program "/opt/local/bin/sbcl")
+(cond
+ (system-type "gnu/linux") (setq inferior-lisp-program "/usr/bin/sbcl")
+ (system-type "darwin") (setq inferior-lisp-program "/opt/local/bin/sbcl"))
 (setq slime-contribs '(slime-fancy))
 
 (when (memq window-system '(mac ns))
