@@ -72,6 +72,12 @@
                     :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
 
 ;; Javascript customizations
+(require 'flycheck)
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
+(setq-default flycheck-disabled-checkers
+              (append (append flycheck-disabled-checkers '(javascript-jshint)) '(json-jsonlist)))
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+
 (setq js-indent-level 2)
 ;; Python customizations
 
@@ -92,7 +98,7 @@
 (add-to-list 'company-backends 'company-anaconda)
 (add-hook 'python-mode-hook 'anaconda-mode)
 
-;; Confluence Integration
+;; Confluence Integration [NOTE: THIS DOESN'T WORK]
 (require 'confluence)
 (setq confluence-url "https://timbr-io.atlassian.net/wiki/rpc/xmlrpc")
 
@@ -114,6 +120,10 @@
                                               (mark-whole-buffer)
                                               (confluence-xml-reformat)))))
 
+;; special charaters in shell 
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -128,3 +138,6 @@
 ;; SLIME configuration
 (setq inferior-lisp-program "/opt/local/bin/sbcl")
 (setq slime-contribs '(slime-fancy))
+
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
