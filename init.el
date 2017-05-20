@@ -1,5 +1,5 @@
 ;;; init.el --- My ever changing emacs initialization script
-
+(defvar helm-alive-p nil)
 ;; account for windows
 (if (equal system-type 'windows-nt)
     (progn (setq explicit-shell-file-name
