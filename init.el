@@ -2,9 +2,8 @@
 (defvar helm-alive-p nil)
 ;; account for windows
 (if (equal system-type 'windows-nt)
-    (progn (setq explicit-shell-file-name
-                 "C:/Program Files (x86)/Git/bin/bash.exe")
-           (setq explicit-sh.exe-args '("--login" "-i"))
+    (progn (setq explicit-shell-file-name "cmdproxy.exe")
+           (setq explicit-sh.exe-args '("/K" "C:/Users/prak/Anaconda/Scripts/activate.bat C:/Users/prak/Anaconda"))
            (setq shell-file-name explicit-shell-file-name)
            (setenv "SHELL" shell-file-name)
            (add-to-list 'exec-path "c:/Program Files (x86)/Git/bin")
@@ -35,7 +34,6 @@
 
 ;;  Restore popwin-mode after a Helm session finishes.
 (add-hook 'helm-cleanup-hook (lambda () (popwin-mode 1)))
-
 
 ;; configure helm keybindings
 (require 'helm)
@@ -71,6 +69,19 @@
 (set-face-attribute 'mode-line-inactive nil
                     :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
 
+;; autocomplete customizations
+(eval-after-load 'company
+  '(progn
+     (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+     (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+     (define-key company-active-map (kbd "<backtab>") 'company-select-previous))
+  )
+;; (setq company-require-match 'never)
+;; (setq company-auto-complete t)
+
+(add-to-list 'company-backends 'company-anaconda)
+
 ;; Javascript customizations
 (require 'flycheck)
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
@@ -81,6 +92,14 @@
 (setq js-indent-level 2)
 ;; Python customizations
 
+(require 'conda)
+;; interactive shell support
+(conda-env-initialize-interactive-shells)
+;; eshell support
+(conda-env-initialize-eshell)
+;; auto-activation
+(conda-env-autoactivate-mode t)
+
 ;; Automatically remove trailing whitespace when file is saved.
 (add-hook 'python-mode-hook
           (lambda()
@@ -89,18 +108,15 @@
                          (save-excursion
                            (delete-trailing-whitespace))))))
 
-(add-to-list 'auto-mode-alist '("\\.hpy\\'" . python-mode))
 (setq py-autopep8-options '("--max-line-length=79"))
 (add-hook 'python-mode-hook
           (lambda()
             (setq-default fill-column 79)))
 
-(add-to-list 'company-backends 'company-anaconda)
 (add-hook 'python-mode-hook 'anaconda-mode)
 
-;; Confluence Integration [NOTE: THIS DOESN'T WORK]
-(require 'confluence)
-(setq confluence-url "https://timbr-io.atlassian.net/wiki/rpc/xmlrpc")
+(setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--simple-prompt -i")
 
 ;; open confluence page
 (global-set-key (kbd "C-x w f") 'confluence-get-page)
@@ -123,16 +139,18 @@
 ;; special charaters in shell 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(conda-anaconda-home "C:/Users/prak/Anaconda")
  '(custom-safe-themes
    (quote
     ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
- )
+ '(package-selected-packages
+   (quote
+    (conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence company-anaconda))))
 
 
 ;; SLIME configuration
@@ -143,3 +161,10 @@
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
