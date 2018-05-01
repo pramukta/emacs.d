@@ -1,6 +1,7 @@
 ;;; init.el --- My ever changing emacs initialization script
 (defvar helm-alive-p nil)
 ;; account for windows
+
 (if (equal system-type 'windows-nt)
     (progn (setq explicit-shell-file-name "cmdproxy.exe")
            (setq explicit-sh.exe-args '("/K" "C:/Users/prak/Anaconda/Scripts/activate.bat C:/Users/prak/Anaconda"))
@@ -72,6 +73,7 @@
 ;; autocomplete customizations
 (eval-after-load 'company
   '(progn
+     (add-to-list 'company-backends 'company-anaconda)
      (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
      (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
      (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
@@ -80,7 +82,7 @@
 ;; (setq company-require-match 'never)
 ;; (setq company-auto-complete t)
 
-(add-to-list 'company-backends 'company-anaconda)
+;; (add-to-list 'company-backends 'company-anaconda)
 
 ;; Javascript customizations
 (require 'flycheck)
@@ -144,13 +146,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(conda-anaconda-home "C:/Users/prak/Anaconda")
+ '(conda-anaconda-home "/home/prak/anaconda")
  '(custom-safe-themes
    (quote
     ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
+ '(nil nil t)
  '(package-selected-packages
    (quote
-    (conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence company-anaconda))))
+    (anaconda-mode company-anaconda conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
 
 
 ;; SLIME configuration
