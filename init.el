@@ -17,6 +17,7 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
+(require 'use-package)
 
 ;; graphene setup
 (require 'graphene)
@@ -57,18 +58,44 @@
 (require 'helm-projectile)
 (helm-projectile-on)
 
-;; hc-zenburn theme
-(load-theme 'hc-zenburn t)
+;; material theme
+(load-theme 'material t)
 
-(defun zencolor (colorname)
-  "Convert hc-zenburn color symbol to hex string"
-  (cdr (assoc (symbol-name colorname) hc-zenburn-colors-alist))
-  )
+(use-package spaceline
+             :demand t
+             :init
+             (setq powerline-default-separator 'arrow-fade)
+             :config
+             (require 'spaceline-config)
+             (spaceline-spacemacs-theme))
 
-;; visual customizations
-(set-face-attribute 'mode-line nil :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
-(set-face-attribute 'mode-line-inactive nil
-                    :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
+
+
+
+;; set sizes here to stop material theme resizing these
+(require 'org)
+(set-face-attribute 'org-level-1 nil :height 1.0)
+(set-face-attribute 'org-level-2 nil :height 1.0)
+(set-face-attribute 'org-level-3 nil :height 1.0)
+(set-face-attribute 'org-scheduled-today nil :height 1.0)
+(set-face-attribute 'org-agenda-date-today nil :height 1.1)
+(set-face-attribute 'org-table nil :foreground "#008787")
+
+;; ;; hc-zenburn theme
+;; (load-theme 'hc-zenburn t)
+
+;; (defun zencolor (colorname)
+;;   "Convert hc-zenburn color symbol to hex string"
+;;   (cdr (assoc (symbol-name colorname) hc-zenburn-colors-alist))
+;;   )
+
+;; (setq col)
+
+
+;; ;; hc-zenburn visual customizations
+;; (set-face-attribute 'mode-line nil :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
+;; (set-face-attribute 'mode-line-inactive nil
+;;                     :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
 
 ;; autocomplete customizations
 (eval-after-load 'company
@@ -137,7 +164,6 @@
             (global-set-key (kbd "C-c C-r") (lambda()
                                               (mark-whole-buffer)
                                               (confluence-xml-reformat)))))
-
 ;; special charaters in shell 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
@@ -149,11 +175,11 @@
  '(conda-anaconda-home "/home/prak/anaconda")
  '(custom-safe-themes
    (quote
-    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
+    ("a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
  '(nil nil t)
  '(package-selected-packages
    (quote
-    (anaconda-mode company-anaconda conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
+    (material-theme anaconda-mode company-anaconda conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
 
 
 ;; SLIME configuration
