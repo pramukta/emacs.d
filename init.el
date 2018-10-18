@@ -1,14 +1,5 @@
 ;;; init.el --- My ever changing emacs initialization script
 (defvar helm-alive-p nil)
-;; account for windows
-
-(if (equal system-type 'windows-nt)
-    (progn (setq explicit-shell-file-name "cmdproxy.exe")
-           (setq explicit-sh.exe-args '("/K" "C:/Users/prak/Anaconda/Scripts/activate.bat C:/Users/prak/Anaconda"))
-           (setq shell-file-name explicit-shell-file-name)
-           (setenv "SHELL" shell-file-name)
-           (add-to-list 'exec-path "c:/Program Files (x86)/Git/bin")
-           (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)))
 
 (require 'package)
 (add-to-list 'package-archives
@@ -21,6 +12,34 @@
 
 ;; graphene setup
 (require 'graphene)
+
+;; account for windows
+(if (equal system-type 'windows-nt)
+    (progn (setq explicit-shell-file-name "cmdproxy.exe")
+           (setq explicit-sh.exe-args '("/K" "C:/Users/prak/Anaconda/Scripts/activate.bat C:/Users/prak/Anaconda"))
+           (setq shell-file-name explicit-shell-file-name)
+           (setenv "SHELL" shell-file-name)
+           (add-to-list 'exec-path "c:/Program Files (x86)/Git/bin")
+           (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+           (setq tramp-default-method "plink")))
+
+
+(require 'tramp)
+(defconst carnegie-tramp-prompt-regexp
+  (concat (regexp-opt '("Duo two-factor login for pkumar") t)
+          "\\s-*")
+  "Regular expression matching my login prompt question.")
+
+(defun carnegie-tramp-action (proc vec)
+  "Enter 1 to initiate Duo push"
+  (save-window-excursion
+    (with-current-buffer (tramp-get-connection-buffer vec)
+      (tramp-message vec 6 "\n%s" (buffer-string))
+      (tramp-send-string vec "1"))))
+
+;; doesn't work!
+;; (add-to-list 'tramp-actions-before-shell
+;;             '(carnegie-tramp-prompt-regexp carnegie-tramp-action))
 
 ;; disable project-persist
 (require 'project-persist)
@@ -178,7 +197,7 @@
     ("a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
  '(package-selected-packages
    (quote
-    (material-theme anaconda-mode company-anaconda conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
+    (spaceline material-theme anaconda-mode company-anaconda conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
 
 
 ;; SLIME configuration
