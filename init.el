@@ -19,27 +19,9 @@
            (setq explicit-sh.exe-args '("/K" "C:/Users/prak/Anaconda/Scripts/activate.bat C:/Users/prak/Anaconda"))
            (setq shell-file-name explicit-shell-file-name)
            (setenv "SHELL" shell-file-name)
-           (add-to-list 'exec-path "c:/Program Files (x86)/Git/bin")
            (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
-           (setq tramp-default-method "plink")))
-
-
-(require 'tramp)
-(defconst carnegie-tramp-prompt-regexp
-  (concat (regexp-opt '("Duo two-factor login for pkumar") t)
-          "\\s-*")
-  "Regular expression matching my login prompt question.")
-
-(defun carnegie-tramp-action (proc vec)
-  "Enter 1 to initiate Duo push"
-  (save-window-excursion
-    (with-current-buffer (tramp-get-connection-buffer vec)
-      (tramp-message vec 6 "\n%s" (buffer-string))
-      (tramp-send-string vec "1"))))
-
-;; doesn't work!
-;; (add-to-list 'tramp-actions-before-shell
-;;             '(carnegie-tramp-prompt-regexp carnegie-tramp-action))
+           (setq tramp-default-method "ssh")
+           (setq vc-git-program "C:\\cmder\\vendor\\git-for-windows\\bin\\git.exe")))
 
 ;; disable project-persist
 (require 'project-persist)
