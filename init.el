@@ -13,6 +13,15 @@
 ;; graphene setup
 (require 'graphene)
 
+;; conda-mode setup
+(require 'conda)
+;; interactive shell support
+(conda-env-initialize-interactive-shells)
+;; eshell support
+(conda-env-initialize-eshell)
+;; auto-activation
+(conda-env-autoactivate-mode t)
+
 ;; account for windows
 (if (equal system-type 'windows-nt)
     (progn (setq explicit-shell-file-name "cmdproxy.exe")
@@ -70,9 +79,6 @@
              (require 'spaceline-config)
              (spaceline-spacemacs-theme))
 
-
-
-
 ;; set sizes here to stop material theme resizing these
 (require 'org)
 (set-face-attribute 'org-level-1 nil :height 1.0)
@@ -82,35 +88,14 @@
 (set-face-attribute 'org-agenda-date-today nil :height 1.1)
 (set-face-attribute 'org-table nil :foreground "#008787")
 
-;; ;; hc-zenburn theme
-;; (load-theme 'hc-zenburn t)
-
-;; (defun zencolor (colorname)
-;;   "Convert hc-zenburn color symbol to hex string"
-;;   (cdr (assoc (symbol-name colorname) hc-zenburn-colors-alist))
-;;   )
-
-;; (setq col)
-
-
-;; ;; hc-zenburn visual customizations
-;; (set-face-attribute 'mode-line nil :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
-;; (set-face-attribute 'mode-line-inactive nil
-;;                     :box `(:line-width -1 :color ,(zencolor 'hc-zenburn-bg+1) :style nil))
-
 ;; autocomplete customizations
 (eval-after-load 'company
   '(progn
-     (add-to-list 'company-backends 'company-anaconda)
-     (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-     (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-     (define-key company-active-map (kbd "<backtab>") 'company-select-previous))
+     (define-key company-active-map (kbd "TAB") 'company-complete-common)
+     (define-key company-active-map (kbd "<tab>") 'company-complete-common)
+     (define-key company-active-map (kbd "S-TAB") 'company-complete-common-or-cycle)
+     (define-key company-active-map (kbd "<backtab>") 'company-complete-common-or-cycle))
   )
-;; (setq company-require-match 'never)
-;; (setq company-auto-complete t)
-
-;; (add-to-list 'company-backends 'company-anaconda)
 
 ;; Javascript customizations
 (require 'flycheck)
@@ -121,14 +106,6 @@
 
 (setq js-indent-level 2)
 ;; Python customizations
-
-(require 'conda)
-;; interactive shell support
-(conda-env-initialize-interactive-shells)
-;; eshell support
-(conda-env-initialize-eshell)
-;; auto-activation
-(conda-env-autoactivate-mode t)
 
 ;; Automatically remove trailing whitespace when file is saved.
 (add-hook 'python-mode-hook
