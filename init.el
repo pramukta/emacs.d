@@ -120,9 +120,9 @@
           (lambda()
             (setq-default fill-column 79)))
 
-(add-hook 'python-mode-hook
-          (lambda()
-            (add-to-list 'company-backends 'company-jedi)))
+;; (add-hook 'python-mode-hook
+;;           (lambda()
+;;             (add-to-list 'company-backends 'company-jedi)))
 
 (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "--simple-prompt -i")
@@ -144,7 +144,7 @@
     ("a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
  '(package-selected-packages
    (quote
-    (spaceline material-theme anaconda-mode company-anaconda conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
+    (jedi-core spaceline material-theme company-jedi conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
 
 
 ;; SLIME configuration
