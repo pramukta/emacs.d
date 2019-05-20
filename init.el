@@ -120,7 +120,9 @@
           (lambda()
             (setq-default fill-column 79)))
 
-(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook
+          (lambda()
+            (add-to-list 'company-backends 'company-jedi)))
 
 (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "--simple-prompt -i")
@@ -128,20 +130,6 @@
 ;; open confluence page
 (global-set-key (kbd "C-x w f") 'confluence-get-page)
 
-;; setup confluence mode
-(add-hook 'confluence-mode-hook
-          (lambda()
-            (local-set-key (kbd "C-x w") 'confluence-prefix-map)))
-
-(add-hook 'confluence-mode-hook
-          (lambda()
-            (visual-line-mode t)))
-
-(add-hook 'confluence-mode-hook
-          (lambda()
-            (global-set-key (kbd "C-c C-r") (lambda()
-                                              (mark-whole-buffer)
-                                              (confluence-xml-reformat)))))
 ;; special charaters in shell 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
