@@ -64,7 +64,7 @@
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
-(setq projectile-switch-project-action 'projectile-dired)
+(setq projectile-switch-project-action 'helm-projectile-find-file)
 (setq projectile-indexing-method 'hybrid)
 
 
