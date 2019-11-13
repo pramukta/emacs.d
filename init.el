@@ -138,9 +138,6 @@
 (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "--simple-prompt -i")
 
-;; open confluence page
-(global-set-key (kbd "C-x w f") 'confluence-get-page)
-
 ;; special charaters in shell 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
