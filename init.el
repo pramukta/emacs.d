@@ -24,13 +24,14 @@
 
 ;; account for windows
 (if (equal system-type 'windows-nt)
-    (progn (setq explicit-shell-file-name "cmdproxy.exe")
-           (setq explicit-sh.exe-args '("/K" "C:/Users/prak/Anaconda/Scripts/activate.bat C:/Users/prak/Anaconda"))
-           (setq shell-file-name explicit-shell-file-name)
-           (setenv "SHELL" shell-file-name)
-           (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
-           (setq tramp-default-method "ssh")
-           (setq vc-git-program "C:\\cmder\\vendor\\git-for-windows\\bin\\git.exe")))
+    (progn
+      (setq explicit-shell-file-name "cmdproxy.exe")
+      (setq explicit-sh.exe-args '("/K" "C:/Users/prak/Anaconda/Scripts/activate.bat C:/Users/prak/Anaconda"))
+      (setq shell-file-name explicit-shell-file-name)
+      (setenv "SHELL" shell-file-name)
+      (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+      (setq tramp-default-method "ssh")
+      ))
 
 ;; disable project-persist
 (require 'project-persist)
@@ -59,10 +60,13 @@
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
 ;; configure projectile
+(setq projectile-keymap-prefix (kbd "C-c p"))
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (setq projectile-switch-project-action 'projectile-dired)
+(setq projectile-indexing-method 'hybrid)
+
 
 ;; configure helm-projectile
 (require 'helm-projectile)
@@ -100,8 +104,16 @@
 ;; Javascript customizations
 (require 'flycheck)
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
+(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+
+(add-hook 'web-mode-hook '(lambda()
+                            (setq web-mode-markup-indent-offset 2)
+                            (setq web-mode-code-indent-offset 2)))
+(add-hook 'web-mode-hook 'emmet-mode)
 (setq-default flycheck-disabled-checkers
-              (append (append flycheck-disabled-checkers '(javascript-jshint)) '(json-jsonlist)))
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint json-jsonlist)))
+
 (flycheck-add-mode 'javascript-eslint 'web-mode)
 
 (setq js-indent-level 2)
@@ -144,7 +156,7 @@
     ("a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" default)))
  '(package-selected-packages
    (quote
-    (jedi-core spaceline material-theme company-jedi conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
+    (projectile add-node-modules-path emmet-mode jedi-core spaceline material-theme company-jedi conda pyvenv visual-regexp-steroids visual-fill-column smart-mode-line-powerline-theme slime-company slime-annot shackle py-autopep8 popwin markdown-mode+ json-mode js2-mode jedi-direx inf-mongo helm-projectile hc-zenburn-theme graphene fill-column-indicator ein confluence))))
 
 
 ;; SLIME configuration
