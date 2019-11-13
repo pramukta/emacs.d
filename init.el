@@ -33,10 +33,6 @@
       (setq tramp-default-method "ssh")
       ))
 
-;; disable project-persist
-(require 'project-persist)
-(project-persist-mode 0)
-
 ;; put helm buffers in popwin
 (require 'popwin)
 ;; (setq display-buffer-function 'popwin:display-buffer)
@@ -59,14 +55,17 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
-;; configure projectile
+;; disable project-persist
+(require 'project-persist)
+(project-persist-mode 0)
+
+;; configure projectile instead
 (setq projectile-keymap-prefix (kbd "C-c p"))
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile-find-file)
 (setq projectile-indexing-method 'hybrid)
-
 
 ;; configure helm-projectile
 (require 'helm-projectile)
@@ -127,10 +126,10 @@
                          (save-excursion
                            (delete-trailing-whitespace))))))
 
-(setq py-autopep8-options '("--max-line-length=79"))
+(setq py-autopep8-options '("--max-line-length=120"))
 (add-hook 'python-mode-hook
           (lambda()
-            (setq-default fill-column 79)))
+            (setq-default fill-column 120)))
 
 ;; (add-hook 'python-mode-hook
 ;;           (lambda()
