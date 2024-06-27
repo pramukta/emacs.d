@@ -26,7 +26,7 @@
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(paredit sly vterm xresources-theme monokai-pro-theme))
+ '(paredit sly vterm xresources-theme monokai-pro-theme))
  '(safe-local-variable-values
    '((vc-prepare-patches-separately)
      (diff-add-log-use-relative-names . t)
@@ -52,3 +52,14 @@
 (add-hook 'lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook 'enable-paredit-mode)
+
+;; account for windows
+(if (equal system-type 'windows-nt)
+    (progn
+;;      (setq explicit-shell-file-name "cmd.exe")
+;;      (setq explicit-sh.exe-args '("/K" "C:/cmder/vendor/init.bat"))
+;;      (setq shell-file-name explicit-shell-file-name)
+;;      (setenv "SHELL" shell-file-name)
+      (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+      (setq tramp-default-method "ssh")
+      (setq inferior-lisp-program "C:/sbcl/sbcl.exe")))
