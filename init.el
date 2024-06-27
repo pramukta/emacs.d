@@ -26,7 +26,7 @@
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(sly vterm xresources-theme monokai-theme monokai-pro-theme))
+   '(paredit sly vterm xresources-theme monokai-pro-theme))
  '(safe-local-variable-values
    '((vc-prepare-patches-separately)
      (diff-add-log-use-relative-names . t)
@@ -45,3 +45,10 @@
 
 ;; SLY / SBCL configuration
 (setq inferior-lisp-program "/usr/bin/sbcl")
+
+;; paredit configuration
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'scheme-mode-hook 'enable-paredit-mode)
