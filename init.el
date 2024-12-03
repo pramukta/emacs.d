@@ -26,7 +26,7 @@
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
  '(package-selected-packages
- '(paredit sly vterm xresources-theme monokai-pro-theme))
+   '(slime paredit sly vterm xresources-theme monokai-pro-theme))
  '(safe-local-variable-values
    '((vc-prepare-patches-separately)
      (diff-add-log-use-relative-names . t)
