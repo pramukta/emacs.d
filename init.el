@@ -3,7 +3,15 @@
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-pinned-packages '(projectile . "melpa-stable") t)
+(add-to-list 'package-pinned-packages '(magit . "melpa-stable") t)
 (package-initialize)
+;; package installations
+(unless package-archive-contents
+  (package-refresh-contents))
+(package-install-selected-packages)
+
 
 (load-theme 'monokai-pro t)
 
@@ -26,14 +34,15 @@
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(paredit sly vterm xresources-theme monokai-pro-theme))
+   '(projectile slime paredit sly vterm xresources-theme monokai-pro-theme magit))
  '(safe-local-variable-values
    '((vc-prepare-patches-separately)
      (diff-add-log-use-relative-names . t)
      (vc-git-annotate-switches . "-w")
      (emacs-lisp-docstring-fill-column . 65)))
  '(scroll-bar-mode 'right)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(magit-define-global-key-bindings 'recommended))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,7 +53,7 @@
 (set-window-scroll-bars (minibuffer-window) nil nil)
 
 ;; SLY / SBCL configuration
-(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq inferior-lisp-program "sbcl")
 
 ;; paredit configuration
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -52,3 +61,10 @@
 (add-hook 'lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook 'enable-paredit-mode)
+
+
+;; projectile config
+(require 'projectile)
+;; Recommended keymap prefix on Windows/Linux
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(projectile-mode +1)
