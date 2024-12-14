@@ -6,6 +6,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-pinned-packages '(projectile . "melpa-stable") t)
 (add-to-list 'package-pinned-packages '(magit . "melpa-stable") t)
+(add-to-list 'package-pinned-packages '(lsp-mode . "melpa-stable") t)
 (package-initialize)
 ;; package installations
 (unless package-archive-contents
@@ -34,7 +35,7 @@
  '(magit-define-global-key-bindings 'recommended)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(projectile slime paredit sly vterm xresources-theme monokai-pro-theme magit counsel))
+   '(projectile slime paredit sly vterm xresources-theme monokai-pro-theme magit counsel lsp-mode lsp-ui))
  '(safe-local-variable-values
    '((vc-prepare-patches-separately)
      (diff-add-log-use-relative-names . t)
@@ -69,6 +70,18 @@
 (global-set-key "\C-s" 'swiper)
 (require 'counsel)
 (counsel-mode 1)
+
+
+;; lsp-mode
+(setq lsp-keymap-prefix (kbd "C-c l"))
+(setq lsp-auto-configure t)
+(require 'lsp-mode)
+(require 'lsp-ui)
+(lsp-ui-mode 1)
+
+
+;; python - disabled until I can figure out venv / lsp-mode
+;; (add-hook 'python-mode-hook #'lsp-deferred)
 
 ;; account for windows
 (if (equal system-type 'windows-nt)
