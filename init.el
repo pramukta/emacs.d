@@ -10,8 +10,7 @@
 ;; package installations
 (unless package-archive-contents
   (package-refresh-contents))
-(package-install-selected-packages)
-
+(package-install-selected-packages t)
 
 (load-theme 'monokai-pro t)
 
@@ -32,23 +31,17 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
+ '(magit-define-global-key-bindings 'recommended)
  '(menu-bar-mode t)
  '(package-selected-packages
-   '(projectile slime paredit sly vterm xresources-theme monokai-pro-theme magit))
+   '(projectile slime paredit sly vterm xresources-theme monokai-pro-theme magit counsel))
  '(safe-local-variable-values
    '((vc-prepare-patches-separately)
      (diff-add-log-use-relative-names . t)
      (vc-git-annotate-switches . "-w")
      (emacs-lisp-docstring-fill-column . 65)))
  '(scroll-bar-mode 'right)
- '(tool-bar-mode nil)
- '(magit-define-global-key-bindings 'recommended))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+ '(tool-bar-mode nil))
 
 (set-window-scroll-bars (minibuffer-window) nil nil)
 
@@ -68,13 +61,22 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (projectile-mode +1)
 
+;; ivy, swiper, counsel
+(require 'ivy)
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+(global-set-key "\C-s" 'swiper)
+(require 'counsel)
+(counsel-mode 1)
+
 ;; account for windows
 (if (equal system-type 'windows-nt)
     (progn
-;;      (setq explicit-shell-file-name "cmd.exe")
-;;      (setq explicit-sh.exe-args '("/K" "C:/cmder/vendor/init.bat"))
-;;      (setq shell-file-name explicit-shell-file-name)
-;;      (setenv "SHELL" shell-file-name)
+      ;;      (setq explicit-shell-file-name "cmd.exe")
+      ;;      (setq explicit-sh.exe-args '("/K" "C:/cmder/vendor/init.bat"))
+      ;;      (setq shell-file-name explicit-shell-file-name)
+      ;;      (setenv "SHELL" shell-file-name)
       (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
       (setq tramp-default-method "ssh")
       (setq inferior-lisp-program "C:/sbcl/sbcl.exe")))
